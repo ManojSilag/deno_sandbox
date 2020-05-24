@@ -28,8 +28,6 @@ let courses: Array<Course> = [
   },
 ];
 
-const router = new Router();
-
 //File: controllers
 
 export const getCourses = ({ response }: { response: any }) => {
@@ -49,3 +47,15 @@ export const addCourses = async ({
   response.body = { coursesAdded: "SUCCESS" };
   response.status = 200;
 };
+
+//File: Server Files
+const router = new Router();
+const app = new Application();
+const PORT = 4300;
+
+router.get("/learn", getCourses).post("/create", addCourses);
+
+app.use(router.routes());
+app.use(router.allowedMethods());
+
+await app.listen({ port: PORT });
